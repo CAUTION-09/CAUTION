@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Жарандык коргонуу - Zeerek</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a0202; color: white;
+            min-height: 100vh; display: flex;
+            flex-direction: column; align-items: center;
+        }
+
+        #fire-bg {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background: linear-gradient(to top, #4d0a0a, #1a0202);
+        }
+        .flame {
+            position: absolute; bottom: -100px;
+            background: rgba(255, 68, 0, 0.4); border-radius: 50%;
+            filter: blur(30px); animation: rise 4s infinite ease-in-out;
+        }
+        @keyframes rise {
+            0% { transform: translateY(0) scale(1); opacity: 0.3; }
+            100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+        }
+
+        .container { max-width: 1000px; width: 95%; padding: 40px 0; }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 12px 25px; background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px; color: #ffaa00; text-decoration: none;
+            font-weight: 600; transition: 0.3s; margin-bottom: 25px;
+        }
+        .back-link:hover { background: #ff4500; color: white; transform: translateX(-5px); }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        .nav-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
+        .tab-btn {
+            padding: 15px 30px; border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1); color: white;
+            border-radius: 40px; cursor: pointer; font-weight: bold; font-size: 18px;
+        }
+        .tab-btn.active { background: #ff4500; border-color: #ff4500; }
+
+        .content-section h1 { color: #ff4500; text-align: center; text-transform: uppercase; }
+        .content-section h2 { color: #ffaa00; border-left: 5px solid #ff4500; padding-left: 15px; margin-top: 35px; }
+        .content-section p, .content-section li { font-size: 19px; line-height: 1.8; color: #f0f0f0; }
+
+        .q-block { 
+            background: rgba(255, 255, 255, 0.05); padding: 20px; 
+            border-radius: 15px; margin-bottom: 20px; border-left: 5px solid #555; 
+            transition: 0.3s;
+        }
+        .q-text { font-size: 20px; font-weight: bold; margin-bottom: 10px; display: block; }
+        .opt { display: block; padding: 10px; margin: 5px 0; cursor: pointer; border-radius: 8px; background: rgba(255,255,255,0.05); }
+        
+        /* Жооптордун стили */
+        .correct-info { display: none; margin-top: 10px; padding: 10px; border-radius: 5px; font-weight: bold; }
+        .is-correct { border-left-color: #00ff00 !important; background: rgba(0, 255, 0, 0.05); }
+        .is-wrong { border-left-color: #ff0000 !important; background: rgba(255, 0, 0, 0.05); }
+
+        .check-btn {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white; border: none; padding: 20px 50px; font-size: 22px;
+            border-radius: 50px; cursor: pointer; display: block; margin: 40px auto; font-weight: bold;
+        }
+        .score-display { text-align: center; font-size: 28px; color: #ffaa00; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div id="fire-bg"></div>
+    <div class="container">
+        <a href="index.html" class="back-link">⬅️ Башкы бетке кайтуу</a>
+        <div class="glass-card">
+            <div class="nav-tabs">
+                <button id="btnLec" class="tab-btn active" onclick="setTab('lec')">📖 Лекция</button>
+                <button id="btnTest" class="tab-btn" onclick="setTab('test')">📝 Тест</button>
+            </div>
+
+            <div id="sec-lec" class="content-section">
+                <h1>Жарандык коргонуу боюнча жалпы түшүнүк (лекция)</h1>
+                <h2>1. Жарандык коргонуу деген эмне?</h2>
+                <p>Жарандык коргонуу — бул калкты, аймактарды жана материалдык баалуулуктарды табигый жана техногендик кырсыктардан, ошондоо эле согуш учурундагы коркунучтардан коргоого багытталган мамлекеттик чаралардын жыйындысы.<br>
+                Бул түшүнүк Жарандык коргонуу тармагына кирет жана коопсуздук системасынын маанилүү бөлүгү болуп саналат.</p>
+
+                <h2>2. Жарандык коргонуунун максаты</h2>
+                <p>Жарандык коргонуунун негизги максаттары:</p>
+                <ul>
+                    <li>Калктын өмүрүн жана ден соолугун сактоо</li>
+                    <li>Кырсыктардын кесепеттерин азайтуу</li>
+                    <li>Экономикалык объекттерди коргоо</li>
+                    <li>Өзгөчө кырдаалдарда ыкчам жардам көрсөтүү</li>
+                </ul>
+
+                <h2>3. Жарандык коргонуунун милдеттери</h2>
+                <p>Жарандык коргонуу төмөнкү милдеттерди аткарат:</p>
+                <ul>
+                    <li>Калкты алдын ала эскертүү (сигнал берүү)</li>
+                    <li>Калкты эвакуациялоо</li>
+                    <li>Баш калкалоочу жайларды даярдоо</li>
+                    <li>Куткаруу иштерин жүргүзүү</li>
+                    <li>Медициналык жардам көрсөтүү</li>
+                    <li>Өрт коопсуздугун камсыз кылуу</li>
+                </ul>
+
+                <h2>4. Өзгөчө кырдаалдардын түрлөрү</h2>
+                <p>Жарандык коргонуу көбүнчө Өзгөчө кырдаал шарттарында ишке ашат:</p>
+                <p><strong>Табигый кырсыктар:</strong></p>
+                <ul>
+                    <li>Жер титирөө</li>
+                    <li>Сел</li>
+                    <li>Суу ташкыны</li>
+                    <li>Кар көчкү</li>
+                </ul>
+                <p><strong>Техногендик кырсыктар:</strong></p>
+                <ul>
+                    <li>Өндүрүш авариялары</li>
+                    <li>Өрттөр</li>
+                    <li>Химиялык уулануулар</li>
+                </ul>
+
+                <h2>5. Жарандык коргонуу системасы</h2>
+                <p>Жарандык коргонуу системасына төмөнкүлөр кирет:</p>
+                <ul>
+                    <li>Мамлекеттик органдар</li>
+                    <li>Куткаруу кызматтары</li>
+                    <li>Медициналык мекемелер</li>
+                    <li>Калк (жарандар)</li>
+                </ul>
+                <p>Мисалы, Кыргыз Республикасынын Өзгөчө кырдаалдар министрлиги бул тармактагы негизги орган болуп эсептелет.</p>
+
+                <h2>6. Калктын милдеттери</h2>
+                <p>Жарандар төмөнкүлөрдү билиши жана аткарышы керек:</p>
+                <ul>
+                    <li>Коопсуздук эрежелерин сактоо</li>
+                    <li>Өзгөчө кырдаалда туура аракеттенүү</li>
+                    <li>Алгачкы медициналык жардам көрсөтө билүү</li>
+                    <li>Эвакуация эрежелерин билүү</li>
+                </ul>
+
+                <h2>7. Жарандык коргонуу сигналдары</h2>
+                <p>Негизги сигнал: <strong>"Көңүл бургула!"</strong> — сирена аркылуу берилет. Бул сигналды укканда:</p>
+                <ul>
+                    <li>Радио/телевидение күйгүзүү</li>
+                    <li>Расмий маалыматтарды угуу</li>
+                    <li>Көрсөтмөлөрдү так аткаруу керек</li>
+                </ul>
+
+                <h2>8. Жыйынтык</h2>
+                <p>Жарандык коргонуу — бул ар бир жаран билиши керек болгон маанилүү тармак. Ал адамдын өмүрүн сактоого жана коомдун туруктуулугун камсыз кылууга жардам берет.</p>
+            </div>
+
+            <div id="sec-test" style="display:none">
+                <h1 style="text-align:center; color:#ff4500;">📘 Тест суроолор</h1>
+                <div class="q-block" id="q1">
+                    <span class="q-text">1. Жарандык коргонуу деген эмне?</span>
+                    <label class="opt"><input type="radio" name="q1" value="A"> A) Спорттук иш-чара</label>
+                    <label class="opt"><input type="radio" name="q1" value="B"> B) Калкты коргоо системасы</label>
+                    <label class="opt"><input type="radio" name="q1" value="C"> C) Медициналык дарылоо</label>
+                    <label class="opt"><input type="radio" name="q1" value="D"> D) Экономикалык программа</label>
+                    <div class="correct-info" id="info1" style="color:#00ff00">Туура жооп: B</div>
+                </div>
+
+                <div class="q-block" id="q2">
+                    <span class="q-text">2. Жарандык коргонуу кайсы тармакка кирет?</span>
+                    <label class="opt"><input type="radio" name="q2" value="A"> A) Жарандык коргонуу</label>
+                    <label class="opt"><input type="radio" name="q2" value="B"> B) Биология</label>
+                    <label class="opt"><input type="radio" name="q2" value="C"> C) Астрономия</label>
+                    <label class="opt"><input type="radio" name="q2" value="D"> D) Химия</label>
+                    <div class="correct-info" id="info2" style="color:#00ff00">Туура жооп: A</div>
+                </div>
+
+                <div class="q-block" id="q3">
+                    <span class="q-text">3. Жарандык коргонуунун негизги максаты кайсы?</span>
+                    <label class="opt"><input type="radio" name="q3" value="A"> A) Оюн уюштуруу</label>
+                    <label class="opt"><input type="radio" name="q3" value="B"> B) Адамдардын өмүрүн сактоо</label>
+                    <label class="opt"><input type="radio" name="q3" value="C"> C) Спорт өнүктүрүү</label>
+                    <label class="opt"><input type="radio" name="q3" value="D"> D) Соода кылуу</label>
+                    <div class="correct-info" id="info3" style="color:#00ff00">Туура жооп: B</div>
+                </div>
+
+                <div class="q-block" id="q4">
+                    <span class="q-text">4. Өзгөчө кырдаал деген эмне?</span>
+                    <label class="opt"><input type="radio" name="q4" value="A"> A) Майрам</label>
+                    <label class="opt"><input type="radio" name="q4" value="B"> B) Кадимки күн</label>
+                    <label class="opt"><input type="radio" name="q4" value="C"> C) Кооптуу абал</label>
+                    <label class="opt"><input type="radio" name="q4" value="D"> D) Сабак</label>
+                    <div class="correct-info" id="info4" style="color:#00ff00">Туура жооп: C</div>
+                </div>
+
+                <div class="q-block" id="q5">
+                    <span class="q-text">5. Кайсысы табигый кырсыкка кирет?</span>
+                    <label class="opt"><input type="radio" name="q5" value="A"> A) Өрт</label>
+                    <label class="opt"><input type="radio" name="q5" value="B"> B) Жер титирөө</label>
+                    <label class="opt"><input type="radio" name="q5" value="C"> C) Авария</label>
+                    <label class="opt"><input type="radio" name="q5" value="D"> D) Жарылуу</label>
+                    <div class="correct-info" id="info5" style="color:#00ff00">Туура жооп: B</div>
+                </div>
+
+                <div class="q-block" id="q6">
+                    <span class="q-text">6. “Көңүл бургула!” сигналы эмнени билдирет?</span>
+                    <label class="opt"><input type="radio" name="q6" value="A"> A) Оюн башталды</label>
+                    <label class="opt"><input type="radio" name="q6" value="B"> B) Коркунуч бар</label>
+                    <label class="opt"><input type="radio" name="q6" value="C"> C) Сабак бүттү</label>
+                    <label class="opt"><input type="radio" name="q6" value="D"> D) Эч нерсе жок</label>
+                    <div class="correct-info" id="info6" style="color:#00ff00">Туура жооп: B</div>
+                </div>
+
+                <div class="q-block" id="q7">
+                    <span class="q-text">7. Эвакуация деген эмне?</span>
+                    <label class="opt"><input type="radio" name="q7" value="A"> A) Тамактануу</label>
+                    <label class="opt"><input type="radio" name="q7" value="B"> B) Адамдарды коопсуз жайга көчүрүү</label>
+                    <label class="opt"><input type="radio" name="q7" value="C"> C) Окуу</label>
+                    <label class="opt"><input type="radio" name="q7" value="D"> D) Дарылоо</label>
+                    <div class="correct-info" id="info7" style="color:#00ff00">Туура жооп: B</div>
+                </div>
+
+                <div class="q-block" id="q8">
+                    <span class="q-text">8. Өзгөчө кырдаалда биринчи эмне кылуу керек?</span>
+                    <label class="opt"><input type="radio" name="q8" value="A"> A) Паника кылуу</label>
+                    <label class="opt"><input type="radio" name="q8" value="B"> B) Качуу</label>
+                    <label class="opt"><input type="radio" name="q8" value="C"> C) Тынчтык сактоо</label>
+                    <label class="opt"><input type="radio" name="q8" value="D"> D) Уктоо</label>
+                    <div class="correct-info" id="info8" style="color:#00ff00">Туура жооп: C</div>
+                </div>
+
+                <div class="q-block" id="q9">
+                    <span class="q-text">9. Кайсы орган жарандык коргонууга жооп берет?</span>
+                    <label class="opt"><input type="radio" name="q9" value="A"> A) Мектеп</label>
+                    <label class="opt"><input type="radio" name="q9" value="B"> B) Кыргыз Республикасынын Өзгөчө кырдаалдар министрлиги</label>
+                    <label class="opt"><input type="radio" name="q9" value="C"> C) Дүкөн</label>
+                    <label class="opt"><input type="radio" name="q9" value="D"> D) Банк</label>
+                    <div class="correct-info" id="info9" style="color:#00ff00">Туура жооп: B</div>
+                </div>
+
+                <div class="q-block" id="q10">
+                    <span class="q-text">10. Жарандардын негизги милдети кайсы?</span>
+                    <label class="opt"><input type="radio" name="q10" value="A"> A) Эрежелерди сактоо</label>
+                    <label class="opt"><input type="radio" name="q10" value="B"> B) Оюн ойноо</label>
+                    <label class="opt"><input type="radio" name="q10" value="C"> C) Уктоо</label>
+                    <label class="opt"><input type="radio" name="q10" value="D"> D) Телефон кармоо</label>
+                    <div class="correct-info" id="info10" style="color:#00ff00">Туура жооп: A</div>
+                </div>
+
+                <button class="check-btn" onclick="calc()">Текшерүү</button>
+                <div id="result" class="score-display"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setTab(t) {
+            document.getElementById('sec-lec').style.display = t === 'lec' ? 'block' : 'none';
+            document.getElementById('sec-test').style.display = t === 'test' ? 'block' : 'none';
+            document.getElementById('btnLec').classList.toggle('active', t === 'lec');
+            document.getElementById('btnTest').classList.toggle('active', t === 'test');
+            window.scrollTo(0,0);
+        }
+
+        function calc() {
+            let s = 0;
+            const ans = {q1:'B', q2:'A', q3:'B', q4:'C', q5:'B', q6:'B', q7:'B', q8:'C', q9:'B', q10:'A'};
+            for(let i=1; i<=10; i++) {
+                let sel = document.querySelector(`input[name="q${i}"]:checked`);
+                let block = document.getElementById(`q${i}`);
+                let info = document.getElementById(`info${i}`);
+                info.style.display = "block";
+                if(sel && sel.value === ans[`q${i}`]) {
+                    s++;
+                    block.className = "q-block is-correct";
+                } else {
+                    block.className = "q-block is-wrong";
+                }
+            }
+            document.getElementById('result').innerText = "Жыйынтык: " + s + " / 10";}
+
+        const bg = document.getElementById('fire-bg');
+        for (let i = 0; i < 20; i++) {
+            const f = document.createElement('div');
+            f.className = 'flame';
+            f.style.left = Math.random() * 100 + '%';
+            f.style.width = f.style.height = (Math.random() * 100 + 50) + 'px';
+            f.style.animationDelay = Math.random() * 5 + 's';
+            bg.appendChild(f);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeerek - Коопсуздук Мектеби</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a0202; color: white;
+            overflow-x: hidden; display: flex;
+            flex-direction: column; align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Анимацияланган өрт фону */
+        #fire-bg {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background: linear-gradient(to top, #4d0a0a, #1a0202);
+        }
+        .flame {
+            position: absolute; bottom: -100px;
+            background: rgba(255, 68, 0, 0.4); border-radius: 50% 50% 20% 20%;
+            filter: blur(30px); animation: rise 4s infinite ease-in-out;
+        }
+        @keyframes rise {
+            0% { transform: translateY(0) scale(1); opacity: 0.3; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+        }
+
+        .container {
+            max-width: 1000px; width: 90%;
+            text-align: center; padding: 50px 0;
+        }
+
+        h1 {
+            font-size: 3.5rem; margin-bottom: 10px;
+            text-transform: uppercase; letter-spacing: 2px;
+            text-shadow: 3px 3px 15px rgba(255, 69, 0, 0.7);
+        }
+
+        .subtitle {
+            font-size: 1.3rem; color: #ffaa00; margin-bottom: 50px;
+            font-weight: 300;
+        }
+
+        /* Темалар сеткасы */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        /* Карточка стили */
+        .topic-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; align-items: center;
+            text-decoration: none; color: white;
+            position: relative; overflow: hidden;
+        }
+
+        .topic-card::after {
+            content: ""; position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 4px; background: #ff4500;
+            transform: scaleX(0); transition: 0.4s;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-12px);
+            background: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 20px 40px rgba(255, 69, 0, 0.3);
+            border-color: #ff4500;
+        }
+
+        .topic-card:hover::after { transform: scaleX(1); }
+
+        .icon { font-size: 55px; margin-bottom: 20px; transition: 0.3s; }
+        .topic-card:hover .icon { transform: scale(1.2) rotate(5deg); }
+
+        .topic-title { font-size: 22px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+
+        footer { margin-top: auto; padding: 40px; color: rgba(255, 255, 255, 0.4); font-size: 14px; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .menu-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="fire-bg"></div>
+
+    <div class="container">
+        <header>
+            <h1>CAUTION</h1>
+            <div class="subtitle">Өзгөчө кырдаалдар жана коопсуздук боюнча билим берүү платформасы</div>
+        </header>
+
+        <div class="menu-grid">
+            <a href="earthquake.html" class="topic-card">
+                <div class="icon">🌋</div>
+                <div class="topic-title">Жер титирөө</div>
+            </a>
+
+            <a href="civil_defens.html" class="topic-card">
+                <div class="icon">🛡️</div>
+                <div class="topic-title">Жарандык коргонуу</div>
+            </a>
+
+            <a href="fire_safety.html" class="topic-card">
+                <div class="icon">🔥</div>
+                <div class="topic-title">Өрт коопсуздугу</div>
+            </a>
+
+            <a href="evacuation.html" class="topic-card">
+                <div class="icon">🏃</div>
+                <div class="topic-title">Эвакуация</div>
+            </a>
+
+            <a href="first_aid.html" class="topic-card">
+                <div class="icon">🚑</div>
+                <div class="topic-title">Алгачкы жардам</div>
+            </a>
+
+            <a href="terrorism_safety.html" class="topic-card">
+                <div class="icon">🚫</div>
+                <div class="topic-title">Террордук коркунуч</div>
+            </a>
+        </div>
+    </div>
+
+    <footer>© 2026 — Коопсуздук ар бирибиздин колубузда</footer>
+
+    <script>
+        const bg = document.getElementById('fire-bg');
+        for (let i = 0; i < 25; i++) {
+            const flame = document.createElement('div');
+            flame.className = 'flame';
+            const size = Math.random() * 140 + 60;
+            flame.style.width = size + 'px';
+            flame.style.height = size + 'px';
+            flame.style.left = Math.random() * 100 + '%';
+            flame.style.animationDuration = (Math.random() * 3 + 2.5) + 's';
+            flame.style.animationDelay = Math.random() * 5 + 's';
+            bg.appendChild(flame);
+        }
+    </script>
+</body>
+</html>
